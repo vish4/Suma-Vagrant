@@ -1,0 +1,13 @@
+mysqld:
+ image: mysql
+ environment:
+   - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+ restart: always
+app:
+ image: suma
+ ports:
+   - "80:80"
+ links:
+   - mysqld:DB
+ volumes:
+   - .:/vagrant
