@@ -2,6 +2,8 @@ mysqld:
  image: mysql
  environment:
    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+ volumes:
+   - ./suma:/suma
  restart: always
 app:
  image: suma
@@ -10,4 +12,8 @@ app:
  links:
    - mysqld:DB
  volumes:
-   - .:/vagrant
+   - ./suma:/vagrant/suma
+   - ./configs:/vagrant/configs
+   - ./Config_Softlinks.sh:/vagrant/Config_Softlinks.sh
+   - ./postfix.sh:/vagrant/postfix.sh
+ restart: always

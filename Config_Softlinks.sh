@@ -26,8 +26,8 @@ a2enmod mpm_prefork
 a2enmod rewrite
 /etc/init.d/apache2 restart
 
-ln -s /vagrant/configs/service/config/config.yaml /vagrant/suma/service/config/config.yaml
-ln -s /vagrant/configs/service/web/config/config.yaml /vagrant/suma/service/web/config/config.yaml
-ln -s /vagrant/configs/analysis/config/config.yaml /vagrant/suma/analysis/config/config.yaml
-ln -s /vagrant/configs/web/config/spaceassessConfig.js /vagrant/suma/web/config/spaceassessConfig.js
+ln -sf /vagrant/configs/service/config/config.yaml /vagrant/suma/service/config/config.yaml
+ln -sf /vagrant/configs/service/web/config/config.yaml /vagrant/suma/service/web/config/config.yaml
+ln -sf /vagrant/configs/analysis/config/config.yaml /vagrant/suma/analysis/config/config.yaml
+ln -sf /vagrant/configs/web/config/spaceassessConfig.js /vagrant/suma/web/config/spaceassessConfig.js
 

@@ -5,7 +5,7 @@
 #    production:
 #        sumaserver:
 #            db:
-#                host: host location of your mysql database
+#                host: 172.17.0.2
 #                dbname: suma mysql database name
 #                user: suma mysql **application** account name
 #                pword: suma mysql **application** account password
@@ -20,7 +20,7 @@
 production:
     sumaserver:
         db:
-            host: localhost
+            host: 172.17.0.2
             platform: Pdo_Mysql
             dbname: suma
             user: suma
