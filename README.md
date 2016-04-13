@@ -53,4 +53,5 @@ This project is a demo project only and is not intended for production use at th
 
  - Clone this repository
  - Run the command sh DockerStart.sh
+ - Visit [http://localhost:80](http://localhost:80) on your web browser
 
