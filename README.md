@@ -51,6 +51,6 @@ This project is a demo project only and is not intended for production use at th
  - Install [Docker](https://docs.docker.com/installation) version 1.10.3
  - Install [Docker Compose](https://docs.docker.com/compose/install/)
 
- - Clone this repo repository
+ - Clone this repository
  - Run the command sh DockerStart.sh
 
