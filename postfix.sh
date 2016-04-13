@@ -1,6 +1,9 @@
 #!/bin/bash
-# Install Postfix. 
-# pre config 
+# Install Postfix.
+
+# TO DO: Ask user to enter an authenticate username and password for the mailserver. collect mailname and destination from the user and feed it to preseed.txt or just let default installation of postfix server run. The user will enter all the details prompted.
+ 
+# pre config (Need to change)
  echo "postfix postfix/main_mailer_type string Internet site" > preseed.txt; \
  echo "postfix postfix/mailname string example.com" >> preseed.txt; \
  echo "postfix postfix/destinations string ncsu.edu" >> preseed.txt;
