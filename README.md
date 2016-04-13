@@ -44,3 +44,13 @@ This project includes a bash script "guest_ansible.sh" for doing additional prov
 ## NOTICE
 
 This project is a demo project only and is not intended for production use at this time. *Please use this only for testing or development deployments*.
+
+## Suma-Docker
+[Tested o Ubuntu-14.04]
+
+ - Install [Docker](https://docs.docker.com/installation) version 1.10.3
+ - Install [Docker Compose](https://docs.docker.com/compose/install/)
+
+ - Clone this repo repository
+ - Run the command sh DockerStart.sh
+
