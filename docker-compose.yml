@@ -1,12 +1,12 @@
 mysqld:
- image: mysql
+ image: vsnarvek/mysql
  environment:
    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
  volumes:
    - ./suma:/suma
  restart: always
 app:
- image: suma
+ image: vsnarvek/suma
  ports:
    - "80:80"
  links:
