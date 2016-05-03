@@ -52,9 +52,9 @@ This project is a demo project only and is not intended for production use at th
  - Install [Docker](https://docs.docker.com/engine/installation/) version 1.10.3
  - Install [Docker Compose](https://docs.docker.com/compose/install/)
 
- - Clone this repository
- - Run the command sh DockerStart.sh
- - Visit [http://localhost:80](http://localhost:80) on your web browser
+ 1) Clone this repository
+ 2) Run the command `sh DockerStart.sh`
+ 3) Visit [http://localhost:80](http://localhost:80) on your web browser
  
 ####Run Docker using Vagrantfile without VM:[Tested for ubuntu 14.04 not tested on MAC]
 
@@ -62,20 +62,20 @@ Need vagrant version 1.6 or greater tested for version 1.8
  
 1) Change the DOCKER_OPTS in /etc/default/docker to:
 
-       ` DOCKER_OPTS="-H <ip:port>" `
+ ` DOCKER_OPTS="-H <ip:port>" `
 
  2) Restart docker
  
-       ` sudo restart docker `
+ ` sudo restart docker `
 
  3) Make sure that docker is running on <ip:port> 
  
-       ` $ netstat -ant  |grep port `
+ ` $ netstat -ant  |grep port `
  
  4) Set DOCKER_HOST and VAGRANT_NO_PARALLEL(.bashrc)
  
-      ` export DOCKER_HOST=<ip:port> `
-      ` export VAGRANT_NO_PARALLEL=true `
+ ` export DOCKER_HOST=<ip:port> `
+ ` export VAGRANT_NO_PARALLEL=true `
        
  RUN
  `vagrant up`
