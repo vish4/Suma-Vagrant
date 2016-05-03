@@ -57,6 +57,8 @@ This project is a demo project only and is not intended for production use at th
  - Visit [http://localhost:80](http://localhost:80) on your web browser
  
 ####Run Docker using Vagrantfile without VM:[Tested for ubuntu 14.04 not tested on MAC]
+
+Need vagrant version 1.6 or greater tested for version 1.8
  
 1) Change the DOCKER_OPTS in /etc/default/docker to:
 
