@@ -1,6 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+
+docker_provider='false'
+current_dir=File.dirname(File.expand_path(__FILE__))
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -9,17 +13,22 @@
 # Verify and install required plugins
 # required_plugins = %w(vagrant-vbguest)
 # TODO: Should we auto-update these?
+
 if ENV['VAGRANT_PLUGINS_UPDATED']=='true'
    alreadyUpdated = 'true'
 end
 
-required_plugins = %w(vagrant-vbguest)
+if !ENV['DOCKER_HO'].nil?
+   docker_provider = 'true'
+end
+
+required_plugins = "vagrant-host-shell vagrant-exec vagrant-vbguest"
 
 if alreadyUpdated != 'true' && (ARGV[0] == "up" || ARGV[0] == "provision")
   system "vagrant plugin install #{required_plugins}"
   system "vagrant plugin update #{required_plugins}"
   ENV['VAGRANT_PLUGINS_UPDATED'] = 'true'
-
+  ENV['VAGRANT_NO_PARALLEL'] = 'true'
   # Restart vagrant after plugin updates
   exec "vagrant #{ARGV.join(' ')}"
 end
@@ -49,6 +58,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
+ if docker_provider == 'false'
   config.vm.box = "ubuntu/trusty32"
 
   # Disable automatic box update checking. If you disable this, then
@@ -56,10 +66,13 @@ Vagrant.configure(2) do |config|
   # `vagrant box outdated`. This is not recommended.
   # config.vm.box_check_update = false
 
+
+
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
+  
   config.vm.network "forwarded_port", guest: 80, host: 19679
   config.vm.network "forwarded_port", guest: 3306, host: 3306
 
@@ -71,12 +84,13 @@ Vagrant.configure(2) do |config|
   # Bridged networks make the machine appear as another physical device on
   # your network.
   # config.vm.network "public_network"
-
+  
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
+
   if RUBY_PLATFORM["darwin"] || RUBY_PLATFORM["linux"]
     config.vm.synced_folder "suma/", "/vagrant/suma", create: true
   else
@@ -120,6 +134,43 @@ Vagrant.configure(2) do |config|
   config.vm.provision :shell,
     :keep_color => true,
     :inline => "export PYTHONUNBUFFERED=1 && cd /vagrant && chmod u+x init.sh && ./init.sh"
+ 
+
+  # Shell based provisioning to bring up containers using docker compose
+    config.vm.provision "init", type: "shell" do |s|
+    s.inline = "cd /vagrant && chmod u+x init.sh && ./init.sh"
+    end
+
+  elsif docker_provider == 'true'
+   
+    system('chmod u+x initDocker.sh && ./initDocker.sh')
+
+    config.vm.define "mysqld" do |db|
+     db.vm.provider "docker" do |d|
+     d.name = "mysqld"
+     d.image = "vsnarvek/mysql"
+     d.pull = true
+     d.env = {
+        "MYSQL_ALLOW_EMPTY_PASSWORD" => "yes"
+    }
+     d.volumes = ["#{current_dir}/suma:/suma"]
+     end
+    end
+
+    config.vm.define "suma" do |app|
+     app.vm.provider "docker" do |a|
+     a.name = "suma"
+     a.image = "vsnarvek/suma"
+     a.pull = true
+     a.link "mysqld:DB"
+     a.ports = ["80:80"]
+     a.volumes = ["#{current_dir}/suma:/vagrant/suma","#{current_dir}/configs:/vagrant/configs","#{current_dir}/Config_Softlinks.sh:/vagrant/Config_Softlinks.sh","#{current_dir}/postfix.sh:/vagrant/postfix.sh"]
+     end
+    end
+
+    system('sudo cp configs/service/config/config.yaml suma/service/config/config.yaml')
+
+  end
 
   # Timezone provisioning
   config.vm.provision "timezone", type:"shell" do |t|
