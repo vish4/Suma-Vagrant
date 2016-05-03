@@ -55,6 +55,22 @@ This project is a demo project only and is not intended for production use at th
  - Run the command sh DockerStart.sh
  - Visit [http://localhost:80](http://localhost:80) on your web browser
  
-To Check for errors:
-docker logs 
+# Run Docker using Vagrantfile:
+ 
+1) Change the DOCKER_OPTS in /etc/default/docker to:
+       `DOCKER_OPTS="-H <ip:port>"`
+
+ 2) Restart docker
+       `sudo restart docker`
+
+ 3) Make sure that docker is running on <ip:port> 
+       `$ netstat -ant  |grep port`
+ 
+ 4) Set DOCKER_HOST And VAGRANT_NO_PARALLEL(.bashrc)
+      ` export DOCKER_HOST=<ip:port>`
+       `export VAGRANT_NO_PARALLEL=true`
+       
+ RUN
+ `vagrant up`
+ 
 
