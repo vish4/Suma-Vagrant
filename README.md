@@ -53,7 +53,9 @@ This project is a demo project only and is not intended for production use at th
  - Install [Docker Compose](https://docs.docker.com/compose/install/)
 
  1) Clone this repository
+ 
  2) Run the command `sh DockerStart.sh`
+ 
  3) Visit [http://localhost:80](http://localhost:80) on your web browser
  
 ####Run Docker using Vagrantfile without VM:[Tested for ubuntu 14.04 not tested on MAC]
