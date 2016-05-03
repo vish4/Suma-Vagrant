@@ -18,7 +18,7 @@ if ENV['VAGRANT_PLUGINS_UPDATED']=='true'
    alreadyUpdated = 'true'
 end
 
-if !ENV['DOCKER_HO'].nil?
+if !ENV['DOCKER_HOST'].nil?
    docker_provider = 'true'
 end
 
